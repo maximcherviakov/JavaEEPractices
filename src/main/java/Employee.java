@@ -1,12 +1,18 @@
-public class Employee {
-    private static int nextId = 0;
-    private long id;
-    private double salary;
-    private String name;
-    private String surname;
+import java.util.Objects;
 
-    public Employee(String name, String surname, double salary) throws FieldLengthLimitException, IncorrectSalaryException {
+public class Employee {
+    protected static int nextId = 0;
+    protected long id;
+    protected long managerId;
+    protected double salary;
+    protected String name;
+    protected String surname;
+    protected String departmentName;
+
+    public Employee(String name, String surname, String departmentName, double salary) throws FieldLengthLimitException, IncorrectSalaryException {
         this.id = nextId++;
+        this.departmentName = departmentName;
+        this.managerId = this.id;
 
         if (name.length() > 20) {
             throw new FieldLengthLimitException("Name should be less than 20 symbols");
@@ -27,12 +33,52 @@ public class Employee {
         }
     }
 
+    public Employee(String name, String surname, String departmentName, double salary, long managerId) throws FieldLengthLimitException, IncorrectSalaryException {
+        this(name, surname, departmentName, salary);
+        this.managerId = managerId;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employee = (Employee) o;
+        return id == employee.id &&
+                managerId == employee.managerId &&
+                Double.compare(employee.salary, salary) == 0 &&
+                Objects.equals(name, employee.name) &&
+                Objects.equals(surname, employee.surname) &&
+                Objects.equals(departmentName, employee.departmentName);
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
                 "id = " + id +
+                ", managerId = " + managerId +
                 ", name = '" + name + '\'' +
                 ", surname = '" + surname + '\'' +
+                ", departmentName = '" + departmentName + '\'' +
                 ", salary = " + salary +
                 " $}";
     }

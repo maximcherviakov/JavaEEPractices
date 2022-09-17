@@ -1,29 +1,30 @@
 public class Main {
     public static void main(String[] args) {
-        Employee employee;
+        WorkersRegistry registry = WorkersRegistry.getInstance();
+        WorkersRegistry registryCopy = WorkersRegistry.getInstance();
 
-        // correct case
+        Manager manager1;
+        Manager manager2;
+        Employee employee = null;
+
         try {
-            employee = new Employee("Luke", "Skywalker", 7000);
-            System.out.println(employee.toString());
+            manager1 = new Manager("Obi wan", "Kenobi", "Training department", 2400, 500);
+            manager2 = new Manager("Anakin", "Skywalker", "Innovations", 1800, 200, manager1.getId());
+            employee = new Employee("Luke", "Skywalker", "Research", 2000, manager2.getId());
+
+            registry.addWorker(manager1);
+            registry.addWorker(manager2);
+            registry.addWorker(employee);
+
+            registry.printList();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
 
-        //incorrect case: surname is too big
         try {
-            employee = new Employee("Anakin", "Skywalker from Tatooine, Darth Vader, Dart Lord", -100);
-            System.out.println(employee.toString());
+            registryCopy.addWorker(employee);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        //incorrect case: negative salary
-        try {
-            employee = new Employee("Anakin", "Skywalker", -100);
-            System.out.println(employee.toString());
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
     }
 }
