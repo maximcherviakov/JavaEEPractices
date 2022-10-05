@@ -1,28 +1,33 @@
 public class Main {
     public static void main(String[] args) {
-        WorkersRegistry registry = WorkersRegistry.getInstance();
-        WorkersRegistry registryCopy = WorkersRegistry.getInstance();
-
-        Manager manager1;
-        Manager manager2;
-        Employee employee = null;
-
         try {
-            manager1 = new Manager("Obi wan", "Kenobi", "Training department", 2400, 500);
-            manager2 = new Manager("Anakin", "Skywalker", "Innovations", 1800, 200, manager1.getId());
-            employee = new Employee("Luke", "Skywalker", "Research", 2000, manager2.getId());
+            Manager CEO = new Manager("Obi wan", "Kenobi", "Management department", 3400, 500, null);
+            Manager PM = new Manager("Luke", "Skywalker", "Management department", 2000, 400, CEO.getId());
+            Manager marketingHead = new Manager("Anakin", "Skywalker", "Management department", 1800, 200, CEO.getId());
 
-            registry.addWorker(manager1);
-            registry.addWorker(manager2);
-            registry.addWorker(employee);
+            Employee seniorEmp = new Employee("Boris", "Jonsonuk", "Application development", 1800, PM.getId());
+            Employee juniorEmp = new Employee("Joel", "Miller", "Application development", 900, PM.getId());
 
-            registry.printList();
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
+            Employee middleBA = new Employee("Mark", "Walter", "Analytic department", 1200, marketingHead.getId());
+            Employee juniorBA = new Employee("Elly", "Mitchel", "Analytic department", 800, marketingHead.getId());
 
-        try {
-            registryCopy.addWorker(employee);
+            CEO.add(PM);
+            CEO.add(marketingHead);
+
+            PM.add(seniorEmp);
+            PM.add(juniorEmp);
+
+            marketingHead.add(middleBA);
+            marketingHead.add(juniorBA);
+
+            System.out.println(CEO.toString());
+
+            for (Employee head : CEO.getSubordinates()) {
+                System.out.println(head.toString());
+                for (Employee emp : head.getSubordinates()) {
+                    System.out.println(emp.toString());
+                }
+            }
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }

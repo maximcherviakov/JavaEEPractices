@@ -1,12 +1,7 @@
 public class Manager extends Employee {
     private double bonus;
 
-    public Manager(String name, String surname, String departmentName, double salary, double bonus) throws FieldLengthLimitException, IncorrectSalaryException {
-        super(name, surname, departmentName, salary);
-        this.bonus = bonus;
-    }
-
-    public Manager(String name, String surname, String departmentName, double salary, double bonus, long managerId) throws FieldLengthLimitException, IncorrectSalaryException {
+    public Manager(String name, String surname, String departmentName, double salary, double bonus, Long managerId) throws FieldLengthLimitException, IncorrectSalaryException {
         super(name, surname, departmentName, salary, managerId);
         this.bonus = bonus;
     }

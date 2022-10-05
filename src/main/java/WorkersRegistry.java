@@ -2,7 +2,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class WorkersRegistry {
-    private static List<Employee> workers = new LinkedList<>();
+    private static final List<Employee> workers = new LinkedList<>();
     private static WorkersRegistry instance = null;
 
     private WorkersRegistry() {
